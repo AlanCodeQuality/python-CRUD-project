@@ -1,26 +1,26 @@
 import sqlite3
 
-# Conectar ao banco de dados (ou criar se não existir)
+# conectar ao banco de dados
 conn = sqlite3.connect('users.db')
 cursor = conn.cursor()
 
-# Função para criar um novo usuário
+#criar usuario
 def create_user(name, email):
     try:
         cursor.execute("INSERT INTO users (name, email) VALUES (?, ?)", (name, email))
         conn.commit()
         print("User created successfully!")
     except sqlite3.IntegrityError:
-        print("Error: Email already exists!")
-
-# Função para ler os usuários
+     print("Error: Email already exists!")
+        
+#ler os usuários
 def read_users():
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
     for user in users:
         print(f"ID: {user[0]}, Name: {user[1]}, Email: {user[2]}")
 
-# Função para atualizar um usuário
+#atualizar usuário
 def update_user(user_id, new_name, new_email):
     cursor.execute("UPDATE users SET name = ?, email = ? WHERE id = ?", (new_name, new_email, user_id))
     conn.commit()
@@ -29,7 +29,7 @@ def update_user(user_id, new_name, new_email):
     else:
         print("User not found!")
 
-# Função para deletar um usuário
+# deletar usuário
 def delete_user(user_id):
     cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
     conn.commit()
@@ -38,7 +38,7 @@ def delete_user(user_id):
     else:
         print("User not found!")
 
-# Menu simples para o CRUD
+# menu para o CRUD
 def menu():
     while True:
         print("\n1. Create User")
